@@ -2,63 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GameRequest;
 use App\Models\Game;
-use Illuminate\Http\Request;
+use App\Http\Resources\GameResource;
 
 class GameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $game;
+    public function __construct(Game $game)
+    {
+        $this->game = $game;
+    }
     public function index()
     {
-        //
+        try {
+            $game = $this->game::all();
+            $data = GameResource::collection($game);
+            return $data;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(GameRequest $request)
     {
-        //
+        try {
+            $validated = $request->validated();
+            if ($validated) {
+                // $data = auth()->user()->game()->create($request->all());
+                $data = $this->game()->create($request->all());
+                return new GameResource($data);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
     public function show(Game $game)
     {
-        //
+        $data = new GameResource($game);
+        return $data;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Game $game)
+    public function update(GameRequest $request, Game $game)
     {
-        //
+        $game->update($request->all());
+        return response()->json($game, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+        return response()->json(null,204);
     }
 }
