@@ -27,7 +27,7 @@ class GameSeeder extends Seeder
               'name' => 'REELS OF WEALTH',
               'url' => 'https://latamwin-gp3.discreetgaming.com/cwguestlogin.do?bankId=3006&gameId=795&lang=es',
               'url_image' => 'https://winchiletragamonedas.com/public/images/games/reels_of_wealth.jpeg',
-              'status'=> 1,
+              'status'=> 0,
             ],
             [
               'name' => 'DRAGON & PHOENIX',
