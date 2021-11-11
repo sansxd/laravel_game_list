@@ -13,7 +13,7 @@ class GameRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,8 +25,9 @@ class GameRequest extends FormRequest
     {
         return [
             'name' => ['required','string'],
+            'description' => ['string','nullable'],
             'url' => ['required','url'],
-            'url_image' => ['required','image'],
+            'url_image' => ['required','url'],
             'status' => ['required','boolean'],
         ];
     }
