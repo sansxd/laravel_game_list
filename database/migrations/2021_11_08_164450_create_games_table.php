@@ -18,6 +18,7 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('url_image');
+            $table->string('description')->nullable();
             $table->boolean('status'); //si esta habilitado 1, desabilitado 0
             $table->timestamps();
         });
