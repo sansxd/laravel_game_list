@@ -73,7 +73,6 @@ export default {
   methods: {
     createGame(game) {
       this.$store.dispatch("createGame", game);
-      this.$router.push({ path: "/" });
     },
   },
   computed: {

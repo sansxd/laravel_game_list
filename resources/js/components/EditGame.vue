@@ -72,11 +72,10 @@ export default {
   },
   methods: {
     getGameByid() {
-      this.$store.dispatch("getGameById", this.$route.params.id);
+      this.$store.dispatch("getGameById", this.$route.params.id)
     },
     updateGame() {
       this.$store.dispatch("editGame", this.gameById);
-      this.$router.push({ path: "/" });
     },
   },
   computed: {
