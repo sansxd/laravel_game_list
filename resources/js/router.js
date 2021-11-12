@@ -1,19 +1,19 @@
 /*
-    Imports Vue and VueRouter to extend with the routes.
+    Imports Vue and Router to extend with the routes.
 */
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Router from 'vue-router';
 
 /*
     Extends Vue to use Vue Router
 */
-Vue.use(VueRouter);
+Vue.use(Router);
 
 /*
-    Makes a new VueRouter that we will use to run all of the routes
+    Makes a new Router that we will use to run all of the routes
     for the app.
 */
-export default new VueRouter({
+export default new Router({
     mode: 'history',
     routes: [
         {
