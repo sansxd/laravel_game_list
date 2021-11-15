@@ -17,9 +17,7 @@ class GameController extends Controller
     public function index()
     {
         try {
-            $game = $this->game::all();
-            $data = GameResource::collection($game);
-            return $data;
+            return GameResource::collection($this->game::all());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -28,11 +26,7 @@ class GameController extends Controller
     public function store(GameRequest $request)
     {
         try {
-            $validated = $request->validated();
-            if ($validated) {
-                $data = $this->game->create($request->all());
-                return new GameResource($data);
-            }
+            return new GameResource($this->game->create($request->validated()));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -41,8 +35,7 @@ class GameController extends Controller
     public function show(Game $game)
     {
         try {
-            $data = new GameResource($game);
-            return $data;
+            return new GameResource($game);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -51,8 +44,11 @@ class GameController extends Controller
     public function update(UpdateGameRequest $request, Game $game)
     {
         try {
-            $game->update($request->all());
-            return response()->json($game, 200);
+            $game = Game::find($game->id);
+            $game->update($request->validated());
+            return new GameResource($game);
+            // $game->update($request->validated());
+            // return response()->json($game, 200);
         } catch (\Exception $e) {
             return $e->getMessage();
         }
