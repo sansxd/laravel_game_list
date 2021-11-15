@@ -1,6 +1,6 @@
 const mutations = {
     FETCH_GAMES(state, games) {
-        return state.games = games
+        state.games = games
     },
     CREATE_GAME(state, game) {
         state.games.push(game)
@@ -14,8 +14,7 @@ const mutations = {
         return index
     },
     GET_GAME(state, game) {
-        const index = state.games.find(item => item.id === game.id)
-        return state.gameById = index;
+        state.gameById = state.games.find(item => item.id === game.id)
     }
 }
 export default mutations
