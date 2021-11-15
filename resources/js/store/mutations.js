@@ -10,8 +10,7 @@ const mutations = {
         state.games.splice(index, 1)
     },
     EDIT_GAME(state, game) {
-        const index = state.games.findIndex(item => item.id === game.id)
-        return index
+        state.games.findIndex(item => item.id === game.id)
     },
     GET_GAME(state, game) {
         state.gameById = state.games.find(item => item.id === game.id)

@@ -7,7 +7,6 @@ let actions = {
         try {
             const res = await axios.get(apiGame)
             commit('FETCH_GAMES', res.data)
-
         } catch (error) {
             console.log(error)
         }
@@ -34,7 +33,7 @@ let actions = {
             console.log(error)
             console.log(error.response.data.errors)
         }
-},
+    },
     async getGameById({ commit }, gameId) {
         try {
             const res = await axios.get(`${apiGame}/${gameId}`)
@@ -43,16 +42,16 @@ let actions = {
             console.log(error)
         }
     },
-        async deleteGame({ commit }, game) {
-    try {
-        const res = await axios.delete(`${apiGame}/${game}`)
-        if (res.data.message === 'delete success') {
-            commit('DELETE_GAME', game);
+    async deleteGame({ commit }, game) {
+        try {
+            const res = await axios.delete(`${apiGame}/${game}`)
+            if (res.data.message === 'delete success') {
+                commit('DELETE_GAME', game);
+            }
+        } catch (error) {
+            console.log(error)
         }
-    } catch (error) {
-        console.log(error)
-    }
-},
+    },
 }
 
 export default actions

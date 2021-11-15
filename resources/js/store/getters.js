@@ -4,6 +4,9 @@ let getters = {
     },
     gameById: state => {
         return state.gameById
+    },
+    errors: state => {
+        return state.errors
     }
 }
 
