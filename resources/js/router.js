@@ -35,6 +35,7 @@ export default new Router({
         {
             path: '/edit/:id',
             name: 'edit',
+            props: true,
             component: Vue.component(
                 'EditGame',
                 require('./components/EditGame.vue').default

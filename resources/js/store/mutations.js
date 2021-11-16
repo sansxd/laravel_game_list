@@ -13,7 +13,7 @@ const mutations = {
         state.games.findIndex(item => item.id === game.id)
     },
     GET_GAME(state, game) {
-        state.gameById = state.games.find(item => item.id === game.id)
+        state.gameById = game
     }
 }
 export default mutations

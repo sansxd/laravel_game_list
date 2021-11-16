@@ -24,11 +24,11 @@ class GameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string'],
-            'description' => ['string','nullable'],
-            'url' => ['required','url'],
-            'url_image' => ['required','url'],
-            'status' => ['required','boolean'],
+            'name' => ['required', 'string', 'unique:games,name,' . $this->game->id],
+            'description' => ['string', 'nullable'],
+            'url' => ['required', 'url'],
+            'url_image' => ['required', 'url'],
+            'status' => ['required', 'boolean'],
         ];
     }
 }

@@ -62,6 +62,12 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props: {
+    id: {
+      required: true,
+      type: [String, Number],
+    },
+  },
   data() {
     return {
       game: {},
@@ -72,7 +78,7 @@ export default {
   },
   methods: {
     getGameByid() {
-      this.$store.dispatch("getGameById", this.$route.params.id)
+      this.$store.dispatch("getGameById", this.id);
     },
     updateGame() {
       this.$store.dispatch("editGame", this.gameById);
