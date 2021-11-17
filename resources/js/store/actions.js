@@ -24,7 +24,7 @@ let actions = {
     },
     async editGame({ commit }, game) {
         try {
-            const res = await axios.put(`${apiGame}/${game.id}`, game)
+            const res = await axios.patch(`${apiGame}/${game.id}`, game)
             if (res.status == 200) {
                 commit('EDIT_GAME', res.data)
                 router.push({ name: 'inicio' })
