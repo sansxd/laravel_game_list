@@ -16,12 +16,15 @@ use App\Http\Controllers\UserController;
 */
 
 Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'authenticate']);
-Route::post('user', [UserController::class, 'getAuthenticatedUser']);
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::apiResource('game', GameController::class);
+Route::post('login', [UserController::class, 'login']);
+Route::middleware(['jwt.verify'])->group(function () {
+    Route::post('user', [UserController::class, 'getAuthenticatedUser']);
+    Route::apiResource('game', GameController::class);
+});
+
+
+
+// Route::apiResource('game', GameController::class);
 
 /*la función de fallback es una forma de anular la
 página 404 predeterminada e introducir una lógica adicional.

@@ -20,10 +20,12 @@ class JwtMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // return $next($request);
         try {
-            $user = JWTAuth::parseToken()->authenticate();
+            if (!JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['status'=>'Usuario no encontrado'], 404);
+            }
         } catch (Exception $e) {
+            // return response()->json(['status' => $e->getMessage()]);
             if ($e instanceof TokenInvalidException) {
                 return response()->json(['status' => 'El Token es invalido']);
             } else if ($e instanceof TokenExpiredException) {

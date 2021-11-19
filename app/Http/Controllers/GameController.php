@@ -6,10 +6,12 @@ use App\Http\Requests\UpdateGameRequest;
 use App\Http\Requests\GameRequest;
 use App\Http\Resources\GameResource;
 use App\Models\Game;
+use Illuminate\Support\Facades\Cache;
 
 class GameController extends Controller
 {
     protected $game;
+
     public function __construct(Game $game)
     {
         $this->game = $game;
@@ -17,7 +19,7 @@ class GameController extends Controller
     public function index()
     {
         try {
-            return GameResource::collection($this->game::all());
+            return Cache::remember('games', 22 * 60, fn () => GameResource::collection($this->game->all()));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
