@@ -12,12 +12,9 @@ class UserController extends Controller
 {
     public function register(UserRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->get('password')),
-        ]);
-        return response()->json(compact('user', 'token'), 201);
+        $user = User::create($request->validated());
+        $token = JWTAuth::fromUser($user);
+        return response()->json(compact('user','token'), 201);
     }
     public function login(Request $request)
     {
@@ -34,8 +31,7 @@ class UserController extends Controller
     public function getAuthenticatedUser()
     {
         try {
-            $user = auth()->user();
-            return response()->json($user);
+            return response()->json(auth()->user());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
