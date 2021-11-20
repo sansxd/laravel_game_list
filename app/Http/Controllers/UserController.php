@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -14,7 +15,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
         $token = JWTAuth::fromUser($user);
-        return response()->json(compact('user','token'), 201);
+        return response()->json(compact('user', 'token'), 201);
     }
     public function login(Request $request)
     {
@@ -28,10 +29,27 @@ class UserController extends Controller
         }
         return response()->json(['token' => $token]);
     }
-    public function getAuthenticatedUser()
+
+    public function logout()
     {
         try {
-            return response()->json(auth()->user());
+            // JWTAuth::invalidate($request->token);
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json([
+                'success' => true,
+                'message' => 'User has been logged out'
+            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getAuthenticatedUser(Request $request)
+    {
+        try {
+            // $user = JWTAuth::toUser();
+            // return response()->json(['user' => $user]);
+            return new UserResource(auth()->user());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
