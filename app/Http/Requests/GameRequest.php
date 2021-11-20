@@ -24,7 +24,7 @@ class GameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'unique:games,name,' . $this->game->id],
+            'name' => ['required', 'string'],
             'description' => ['string', 'nullable'],
             'url' => ['required', 'url'],
             'url_image' => ['required', 'url'],
