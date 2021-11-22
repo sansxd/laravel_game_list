@@ -14,30 +14,31 @@ class UserController extends Controller
     public function register(UserRequest $request)
     {
         $user = User::create($request->validated());
-        $token = JWTAuth::fromUser($user);
+        $tokenUser = JWTAuth::fromUser($user);
+        $token = $this->respondWithToken($tokenUser);
         return response()->json(compact('user', 'token'), 201);
     }
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Credenciales invalidas'], 400);
+                return response()->json(['error' => 'Credenciales invalidas'], 401);
             }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-        return response()->json(['token' => $token]);
+        return response()->json($this->respondWithToken($token));
     }
 
     public function logout()
     {
         try {
-            // JWTAuth::invalidate($request->token);
             JWTAuth::invalidate(JWTAuth::getToken());
             return response()->json([
                 'success' => true,
-                'message' => 'User has been logged out'
+                'message' => 'El usuario ha sido desconectado'
             ]);
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -47,11 +48,18 @@ class UserController extends Controller
     public function getAuthenticatedUser(Request $request)
     {
         try {
-            // $user = JWTAuth::toUser();
-            // return response()->json(['user' => $user]);
             return new UserResource(auth()->user());
         } catch (\Exception $e) {
             return $e->getMessage();
         }
+    }
+    // respuesta de token con expire_in y token_type
+    protected function respondWithToken($token)
+    {
+        return [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL()
+        ];
     }
 }
