@@ -3,7 +3,7 @@
     <h3 class="text-center">Edita el juego: {{ gameById.name }}</h3>
     <div class="row">
       <div class="col">
-        <form @submit.prevent="updateGame">
+        <form @submit.prevent="updateGame" enctype="multipart/form-data">
           <div class="form-group">
             <label for="name">Nombre</label>
             <input
@@ -40,6 +40,21 @@
               v-model="gameById.url_image"
             />
           </div>
+          <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <div class="custom-file">
+              <input
+                type="file"
+                class="form-control"
+                id="inputGroupFile01"
+                accept="image/*"
+                @change="previewFiles"
+              />
+              <label class="custom-file-label" for="inputGroupFile01"
+                >Elegir una Imagen</label
+              >
+            </div>
+          </div>
           <div class="form-check">
             <input
               type="checkbox"
@@ -71,6 +86,7 @@ export default {
   data() {
     return {
       game: {},
+      uploadFieldName: "",
     };
   },
   mounted() {
@@ -82,6 +98,9 @@ export default {
     },
     updateGame() {
       this.$store.dispatch("editGame", this.gameById);
+    },
+    previewFiles(event) {
+      console.log(event.target.files);
     },
   },
   computed: {

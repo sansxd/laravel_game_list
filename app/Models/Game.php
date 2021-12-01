@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Game extends Model
 {
     use HasFactory;
-
+    protected $guard = ['id'];
     protected $fillable = ['name', 'description', 'url', 'url_image', 'status'];
     protected $casts = [
         'status' => 'boolean',

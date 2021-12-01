@@ -28,7 +28,10 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-        return response()->json($this->respondWithToken($token));
+        return response()->json($this->respondWithToken($token),200,[
+            'Authorization' => "Bearer {$token}"
+        ]);
+        
     }
 
     public function logout()
