@@ -46,13 +46,13 @@
               <input
                 type="file"
                 class="form-control"
-                id="inputGroupFile01"
+                id="fileUploadImage"
                 accept="image/*"
                 @change="previewFiles"
               />
-              <label class="custom-file-label" for="inputGroupFile01"
-                >Elegir una Imagen</label
-              >
+              <label class="custom-file-label" for="fileUploadImage">{{
+                fileName
+              }}</label>
             </div>
           </div>
           <div class="form-check">
@@ -85,8 +85,9 @@ export default {
   },
   data() {
     return {
-      game: {},
       uploadFieldName: "",
+      fileName: "Elegir una imagen",
+      gameImage: {}
     };
   },
   mounted() {
@@ -100,7 +101,11 @@ export default {
       this.$store.dispatch("editGame", this.gameById);
     },
     previewFiles(event) {
-      console.log(event.target.files);
+      var file = event.target.files[0]
+      if (file) {
+        this.gameImage = file
+        this.fileName = file.name;
+      }
     },
   },
   computed: {
