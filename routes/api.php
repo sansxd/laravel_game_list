@@ -21,7 +21,9 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::post('user', [UserController::class, 'getAuthenticatedUser']);
 });
+Route::post('fileupload', [GameController::class, 'imageUploadPost']);
 Route::apiResource('game', GameController::class);
+
 
 /*la función de fallback es una forma de anular la
 página 404 predeterminada e introducir una lógica adicional.

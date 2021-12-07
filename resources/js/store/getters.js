@@ -7,7 +7,10 @@ let getters = {
     },
     errors: state => {
         return state.errors
-    }
+    },
+    gameImage: state => {
+        return state.gameImage
+    },
 }
 
 export default getters

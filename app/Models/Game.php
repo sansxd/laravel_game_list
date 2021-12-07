@@ -9,13 +9,19 @@ class Game extends Model
 {
     use HasFactory;
     protected $guard = ['id'];
-    protected $fillable = ['name', 'description', 'url', 'url_image', 'status'];
+    protected $fillable = ['name', 'description', 'url', 'url_image', 'status','file_id'];
     protected $casts = [
         'status' => 'boolean',
     ];
 
+
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtoupper($value);
+    }
+    public function file()
+    {
+        return $this->belongsTo(File::class);
     }
 }

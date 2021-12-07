@@ -22,6 +22,8 @@ class GameResource extends JsonResource
             'url_image' => $this->url_image,
             'status' => $this->status,
             'description' => $this->description,
+            'file_id' => $this->file_id,
+            'image' => $this->file,
         ];
     }
 }

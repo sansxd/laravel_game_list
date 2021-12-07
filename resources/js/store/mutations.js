@@ -14,6 +14,9 @@ const mutations = {
     },
     GET_GAME(state, game) {
         state.gameById = game
+    },
+    UPLOAD_FILE(state, file) {
+        state.gameById.file_id = file.id
     }
 }
 export default mutations
