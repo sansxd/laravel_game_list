@@ -1,88 +1,86 @@
 <template>
-  <div>
-    <form @submit="createGame(game)">
-      <h4 class="text-center font-weight-bold">Añadir juego</h4>
-      <div class="form-group">
-        <label for="name">Nombre</label>
-        <input
-          id="name"
-          type="text"
-          v-model="game.name"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Descripcion</label>
-        <textarea
-          id="description"
-          v-model="game.description"
-          class="form-control"
+    <div>
+        <form @submit="createGame(game)">
+            <h4 class="text-center font-weight-bold">Añadir juego</h4>
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <v-text-field
+                    id="name"
+                    v-model="game.name"
+                    label="Nombre del juego"
+                    required
+                ></v-text-field>
+            </div>
+            <div class="form-group">
+                <label for="description">Descripcion</label>
+                <v-textarea
+                    id="description"
+                    label="Descripcion del juego"
+                    auto-grow
+                    v-model="game.description"
+                ></v-textarea>
+            </div>
+            <template>
+                <v-file-input
+                    accept="image/*"
+                    label="File input"
+                    show-size
+                    counter
+                    @change="previewFiles"
+                ></v-file-input>
+            </template>
+            <div class="form-group">
+                <v-checkbox
+                    v-model="game.status"
+                    label="Disponible"
+                ></v-checkbox>
+            </div>
+            <div class="form-group">
+                <button
+                    :disabled="!isValid"
+                    class="btn btn-block btn-primary"
+                    @click.prevent="createGame(game)"
+                >
+                    Añadir Juego
+                </button>
+            </div>
+        </form>
+        <router-link class="btn btn-info" to="/" tag="button"
+            >Volver</router-link
         >
-        </textarea>
-      </div>
-      <div class="form-group">
-        <label for="url">Url</label>
-        <input
-          id="url"
-          type="text"
-          v-model="game.url"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <label for="urlImage">Url de imagen</label>
-        <input
-          id="urlImage"
-          type="text"
-          v-model="game.url_image"
-          class="form-control"
-        />
-      </div>
-      <div class="form-group">
-        <input type="checkbox" id="checkGame" v-model="game.status" />
-        <label class="form-check-label" for="checkGame">Disponible</label>
-      </div>
-      <div class="form-group">
-        <button
-          :disabled="!isValid"
-          class="btn btn-block btn-primary"
-          @click.prevent="createGame(game)"
-        >
-          Añadir Juego
-        </button>
-      </div>
-    </form>
-    <router-link class="btn btn-info" to="/" tag="button">Volver</router-link>
-  </div>
+    </div>
 </template>
-    
-    <script>
+
+<script>
 export default {
-  name: "CreateGame",
-  data() {
-    return {
-      game: {
-        name: "",
-        description: "",
-        url: "",
-        url_image: "",
-        status: 1,
-      },
-    };
-  },
-  methods: {
-    createGame(game) {
-      this.$store.dispatch("createGame", game);
+    name: "CreateGame",
+    data() {
+        return {
+            game: {
+                name: "",
+                description: "",
+                status: 1,
+            },
+            gameImage: {},
+        };
     },
-  },
-  computed: {
-    isValid() {
-      return (
-        this.game.name !== "" &&
-        this.game.url !== "" &&
-        this.game.url_image !== ""
-      );
+    methods: {
+        createGame(game) {
+            this.$store.dispatch("createGame", game);
+        },
+        previewFiles(event) {
+            let file = event;
+            if (file) {
+                this.gameImage = file;
+            }
+        },
     },
-  },
+    computed: {
+        isValid() {
+            return (
+                this.game.name !== ""
+            );
+        },
+    },
 };
 </script>

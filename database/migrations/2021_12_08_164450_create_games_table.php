@@ -16,11 +16,9 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('url');
-            $table->string('url_image');
             $table->string('description')->nullable();
             $table->boolean('status');
-            $table->foreignId('file_id')->nullable()->constrained();
+            $table->foreignId('file_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

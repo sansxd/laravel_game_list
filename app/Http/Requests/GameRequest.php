@@ -26,10 +26,8 @@ class GameRequest extends FormRequest
         return [
             'name' => ['required', 'string'],
             'description' => ['string', 'nullable'],
-            'url' => ['required', 'url'],
-            'url_image' => ['required', 'url'],
             'status' => ['required', 'boolean'],
-            'file_id' => ['required'],
+            'file_id' => ['sometimes','required'],
         ];
     }
 }

@@ -21,8 +21,8 @@ class GameController extends Controller
     public function index()
     {
         try {
-            return $games = $this->game->with('file')->get();
-            // return Cache::remember('games', 22 * 60, fn () => GameResource::collection($games));
+            $games = $this->game->all();
+            return Cache::remember('games', 22 * 60, fn () => GameResource::collection($games));
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -76,7 +76,7 @@ class GameController extends Controller
                 $imageFile = $request->file('image');
                 //se crea un nombre
                 $imageFileName =  time() . '.' . $imageFile->extension();
-                $imageStorage = Storage::putFileAs('images', $imageFile, $imageFileName);
+                $imageStorage = Storage::putFileAs('public/images', $imageFile, $imageFileName);
                 $url_path = Storage::url($imageStorage);
 
                 // $fileUpload->create(['name' => $imageFileName, 'path' => $url_path]);

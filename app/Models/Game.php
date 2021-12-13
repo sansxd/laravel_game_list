@@ -9,12 +9,12 @@ class Game extends Model
 {
     use HasFactory;
     protected $guard = ['id'];
-    protected $fillable = ['name', 'description', 'url', 'url_image', 'status','file_id'];
+    protected $fillable = ['name', 'description','status','file_id'];
     protected $casts = [
         'status' => 'boolean',
     ];
-
-
+    // The relationships that should always be loaded.
+    protected $with = ['file'];
 
     public function setNameAttribute($value)
     {
